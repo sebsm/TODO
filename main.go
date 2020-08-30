@@ -16,12 +16,18 @@ const (
 	dbname   = "todo"
 )
 
+var dbURL string = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
+	host, port, user, password, dbname)
+
 func main() {
-	conn, err := pgx.Connect(context.Background(), os.Getenv("DATABASE_URL"))
+
+	conn, err := pgx.Connect(context.Background(), dbURL)
 	if err != nil {
 		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
 		os.Exit(1)
 	}
+
+	fmt.Println(dbURL)
 	defer conn.Close(context.Background())
 
 	var greeting string
