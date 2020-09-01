@@ -2,4 +2,7 @@ module main
 
 go 1.15
 
-require github.com/jackc/pgx/v4 v4.8.1
+require (
+	gorm.io/driver/postgres v1.0.0
+	gorm.io/gorm v1.20.0
+)

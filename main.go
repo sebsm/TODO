@@ -1,43 +1,42 @@
 package main
 
 import (
-	"context"
-	"fmt"
-	"os"
-
-	"github.com/jackc/pgx/v4/pgxpool"
+	"gorm.io/driver/postgres"
+	"gorm.io/gorm"
 )
 
-const (
-	host     = "localhost"
-	port     = 5432
-	user     = "postgres"
-	password = "s197328645S!"
-	dbname   = "todo"
-)
-
-var dbINFO string = fmt.Sprintf("host=%s port=%d user=%s password=%s dbname=%s sslmode=disable",
-	host, port, user, password, dbname)
+type task struct {
+	gorm.Model
+	Completed   bool
+	Description string
+}
 
 func main() {
 
-	conn, err := pgxpool.Connect(context.Background(), dbINFO)
+	dsn := "user=postgres password=s197328645S! dbname=todo port=5432 sslmode=disable TimeZone=Europe/Warsaw"
+	db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+
 	if err != nil {
-		fmt.Fprintf(os.Stderr, "Unable to connect to database: %v\n", err)
-		os.Exit(1)
-		panic(err)
+		panic("failed to connect database")
 	}
+	// Migrate the schema
+	db.AutoMigrate(&task{})
 
-	fmt.Println(dbINFO)
-	fmt.Println("Sucesfully connected!")
-	defer conn.Close(context.Background())
+	// Create
+	db.Create(&task{Description: "D42", Completed: true})
 
-	var greeting string
-	err = conn.QueryRow(context.Background(), "select 'Hello, world!'").Scan(&greeting)
-	if err != nil {
-		fmt.Fprintf(os.Stderr, "QueryRow failed: %v\n", err)
-		os.Exit(1)
-	}
+	// Read
+	var product task
+	db.First(&product, 1)                        // find product with integer primary key
+	db.First(&product, "Description = ?", "D42") // find product with code D42
 
-	fmt.Println(greeting)
+	// Update - update product's price to 200
+	db.Model(&product).Update("Completed", false)
+	// Update - update multiple fields
+	db.Model(&product).Updates(task{Completed: false, Description: "F42"}) // non-zero fields
+	db.Model(&product).Updates(map[string]interface{}{"Completed": false, "Description": "F42"})
+
+	// Delete - delete product
+	//db.Delete(&product, 1)
+
 }
