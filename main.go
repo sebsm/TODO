@@ -20,6 +20,14 @@ type task struct {
 	Description string    `json:"description"`
 }
 
+type createtask struct {
+	Title       string    `json:"title" binding:"title"`
+	CreatedAt   time.Time `json:"createdat" binding:"createdat"`
+	UpdatedAt   time.Time `json:"updatedat" binding:"updatedat"`
+	Completed   bool      `json:"completed" binding:"completed"`
+	Description string    `json:"description" binding:"description"`
+}
+
 const (
 	port = ":8080"
 )
@@ -37,6 +45,26 @@ func invalid(c *gin.Context) {
 	})
 	return
 }
+func addtasks(c *gin.Context) {
+	var example createtask
+
+	if err := c.ShouldBindJSON(&example); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+	request := task{
+		Title:       example.Title,
+		CreatedAt:   example.UpdatedAt,
+		UpdatedAt:   example.UpdatedAt,
+		Completed:   example.Completed,
+		Description: example.Description,
+	}
+
+	db.Create(&request)
+
+	c.JSON(http.StatusOK, gin.H{"data": request})
+
+}
 
 func findtasks(c *gin.Context) {
 	var tasks []task
@@ -46,8 +74,9 @@ func findtasks(c *gin.Context) {
 }
 
 func routing(router *gin.Engine) {
-	router.GET("/index", initial)
+	router.GET("/home", initial)
 	router.GET("/tasks", findtasks)
+	router.POST("/add", addtasks)
 	router.NoRoute(invalid)
 }
 
@@ -67,33 +96,7 @@ func connect() {
 }
 
 func main() {
-
-	// dsn := "user=postgres password=s197328645S! dbname=todo port=5432 sslmode=disable TimeZone=Europe/Warsaw"
-	// db, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-
-	// if err != nil {
-	// 	panic("failed to connect database")
-	// }
-	// Migrate the schema
-	//db.Migrator().DropTable(&task{})
-	//db.AutoMigrate(&task{})
-
-	// Create
-	//db.Create(&task{Description: "Wash the dishes", Completed: true})
-
-	// Read
-	// var product task
-	// db.First(&product, 1)                        // find product with integer primary key
-	// db.First(&product, "Description = ?", "D42") // find product with code D42
-
-	// // Update - update product's price to 200
-	// db.Model(&product).Update("Completed", false)
-	// // Update - update multiple fields
-	// db.Model(&product).Updates(task{Completed: false, Description: "R2D2"}) // non-zero fields
-	// db.Model(&product).Updates(map[string]interface{}{"Completed": false, "Description": "R2D2"})
-
-	// //Delete - delete product
-	// db.Delete(&product, 1)
+	db.Migrator().DropTable(&task{})
 	connect()
 	db.Create(&task{Description: "Wash the dishes", Completed: true})
 	router := gin.Default()
