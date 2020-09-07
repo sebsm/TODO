@@ -21,11 +21,19 @@ type task struct {
 }
 
 type createtask struct {
-	Title       string    `json:"title" binding:"title"`
-	CreatedAt   time.Time `json:"createdat" binding:"createdat"`
-	UpdatedAt   time.Time `json:"updatedat" binding:"updatedat"`
-	Completed   bool      `json:"completed" binding:"completed"`
-	Description string    `json:"description" binding:"description"`
+	Title string `json:"title" binding:"title"`
+	// CreatedAt   time.Time `json:"createdat" binding:"createdat"`
+	// UpdatedAt   time.Time `json:"updatedat" binding:"updatedat"`
+	Completed   bool   `json:"completed" binding:"completed"`
+	Description string `json:"description" binding:"description"`
+}
+
+type changetask struct {
+	Title string `json:"title" `
+	// CreatedAt   time.Time `json:"createdat"`
+	// UpdatedAt   time.Time `json:"updatedat"`
+	Completed   bool   `json:"completed"`
+	Description string `json:"description"`
 }
 
 const (
@@ -46,24 +54,34 @@ func invalid(c *gin.Context) {
 	return
 }
 func addtasks(c *gin.Context) {
-	var example createtask
+	var input createtask
 
-	if err := c.ShouldBindJSON(&example); err != nil {
+	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
 	request := task{
-		Title:       example.Title,
-		CreatedAt:   example.UpdatedAt,
-		UpdatedAt:   example.UpdatedAt,
-		Completed:   example.Completed,
-		Description: example.Description,
+		Title: input.Title,
+		// CreatedAt:   input.CreatedAt,
+		// UpdatedAt:   input.UpdatedAt,
+		Completed:   input.Completed,
+		Description: input.Description,
 	}
 
 	db.Create(&request)
 
 	c.JSON(http.StatusOK, gin.H{"data": request})
 
+}
+
+func findtask(c *gin.Context) {
+	var task task
+
+	if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+	c.JSON(http.StatusOK, gin.H{"data": task})
 }
 
 func findtasks(c *gin.Context) {
@@ -73,10 +91,46 @@ func findtasks(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": tasks})
 }
 
+func updatetask(c *gin.Context) {
+	var task task
+
+	if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+
+	// Validate input
+	var input changetask
+	if err := c.ShouldBindJSON(&input); err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+		return
+	}
+
+	db.Model(&task).Updates(input)
+
+	c.JSON(http.StatusOK, gin.H{"data": task})
+}
+
+func deletetask(c *gin.Context) {
+	// Get model if exist
+	var task task
+	if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
+		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+		return
+	}
+
+	db.Delete(&task)
+
+	c.JSON(http.StatusOK, gin.H{"data": true})
+}
+
 func routing(router *gin.Engine) {
 	router.GET("/home", initial)
 	router.GET("/tasks", findtasks)
 	router.POST("/add", addtasks)
+	router.GET("/tasks/:id", findtask)
+	router.PATCH("/tasks/:id", updatetask)
+	router.DELETE("/books/:id", deletetask)
 	router.NoRoute(invalid)
 }
 
@@ -96,9 +150,9 @@ func connect() {
 }
 
 func main() {
-	db.Migrator().DropTable(&task{})
+
 	connect()
-	db.Create(&task{Description: "Wash the dishes", Completed: true})
+	//db.Create(&task{Description: "Wash the dishes", Completed: true})
 	router := gin.Default()
 	routing(router)
 
