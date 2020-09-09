@@ -1,0 +1,21 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <title>File binding</title>
+</head>
+<body>
+    <h1>Add task</h1>
+    <form action="/add" method="post" enctype="multipart/form-data">
+        Title: <input type="text" name="title"><br>
+        Completed: <br>
+        <input type="radio" id="true" name="completed" value="true">
+        <label for="true">True</label><br>
+        <input type="radio" id="false" name="completed" value="false">
+        <label for="false">False</label><br>
+        
+        Description: <input type="text" name="description"><br><br>
+        <input type="submit" value="Submit">
+        <input type="reset">
+    </form>
+</body>

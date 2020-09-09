@@ -155,9 +155,17 @@ func main() {
 	//db.Create(&task{Description: "Wash the dishes", Completed: true})
 	router := gin.Default()
 	routing(router)
+	// s := &http.Server{
+	// 	Addr:           ":8080",
+	// 	Handler:        router,
+	// 	ReadTimeout:    10 * time.Second,
+	// 	WriteTimeout:   10 * time.Second,
+	// 	MaxHeaderBytes: 1 << 20,
+	// }
+	// s.ListenAndServe()
 
-	router.Run(port)
-
+	//router.Run(port)
+	http.ListenAndServe(port, router)
 	log.Fatal(autotls.Run(router))
 
 }
