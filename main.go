@@ -21,11 +21,11 @@ type task struct {
 }
 
 type createtask struct {
-	Title string `json:"title" binding:"title"`
+	Title string `form:"title" binding:"required"`
 	// CreatedAt   time.Time `json:"createdat" binding:"createdat"`
 	// UpdatedAt   time.Time `json:"updatedat" binding:"updatedat"`
-	Completed   bool   `json:"completed" binding:"completed"`
-	Description string `json:"description" binding:"description"`
+	Completed   bool   `form:"completed" binding:"required"`
+	Description string `form:"description" binding:"required"`
 }
 
 type changetask struct {
@@ -56,11 +56,15 @@ func invalid(c *gin.Context) {
 func addtasks(c *gin.Context) {
 	var input createtask
 
+	c.HTML(http.StatusOK, "add.html", gin.H{
+		"title": "Main website",
+	})
+
 	if err := c.ShouldBindJSON(&input); err != nil {
 		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
 		return
 	}
-	request := task{
+	request := &task{
 		Title: input.Title,
 		// CreatedAt:   input.CreatedAt,
 		// UpdatedAt:   input.UpdatedAt,
@@ -131,6 +135,17 @@ func routing(router *gin.Engine) {
 	router.GET("/tasks/:id", findtask)
 	router.PATCH("/tasks/:id", updatetask)
 	router.DELETE("/books/:id", deletetask)
+	router.GET("/addtask", func(c *gin.Context) {
+		c.HTML(200, "add.html", gin.H{
+			"title": "Add task",
+		})
+	})
+	router.GET("/deletetask", func(c *gin.Context) {
+		c.HTML(200, "delete.html", gin.H{
+			"title": "Delete task",
+		})
+	})
+
 	router.NoRoute(invalid)
 }
 
@@ -154,6 +169,7 @@ func main() {
 	connect()
 	//db.Create(&task{Description: "Wash the dishes", Completed: true})
 	router := gin.Default()
+	router.LoadHTMLGlob("templates/*")
 	routing(router)
 	// s := &http.Server{
 	// 	Addr:           ":8080",
