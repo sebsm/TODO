@@ -41,8 +41,8 @@ const (
 )
 
 func initial(c *gin.Context) {
-	c.JSON(200, gin.H{
-		"message": "Hi, friend",
+	c.HTML(200, "home.html", gin.H{
+		"title": "Home page",
 	})
 	return
 }
