@@ -55,6 +55,9 @@ func invalid(c *gin.Context) {
 }
 func addtasks(c *gin.Context) {
 	var input createtask
+	title := c.PostForm("title")
+	completed := c.PostForm("completed")
+	description := c.PostForm("description")
 
 	c.HTML(http.StatusOK, "add.html", gin.H{
 		"title": "Main website",
@@ -65,11 +68,14 @@ func addtasks(c *gin.Context) {
 		return
 	}
 	request := &task{
-		Title: input.Title,
+		// Title: input.Title,
 		// CreatedAt:   input.CreatedAt,
 		// UpdatedAt:   input.UpdatedAt,
-		Completed:   input.Completed,
-		Description: input.Description,
+		// Completed:   input.Completed,
+		// Description: input.Description,
+		Title:       title,
+		Completed:   completed,
+		Description: description,
 	}
 
 	db.Create(&request)
@@ -131,10 +137,10 @@ func deletetask(c *gin.Context) {
 func routing(router *gin.Engine) {
 	router.GET("/home", initial)
 	router.GET("/tasks", findtasks)
-	router.POST("/add", addtasks)
+	router.POST("/addtask", addtasks)
 	router.GET("/tasks/:id", findtask)
 	router.PATCH("/tasks/:id", updatetask)
-	router.DELETE("/books/:id", deletetask)
+	router.DELETE("/deletetask", deletetask)
 	router.GET("/addtask", func(c *gin.Context) {
 		c.HTML(200, "add.html", gin.H{
 			"title": "Add task",
