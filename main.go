@@ -3,6 +3,7 @@ package main
 import (
 	"log"
 	"net/http"
+	"strconv"
 	"time"
 
 	"github.com/gin-gonic/autotls"
@@ -12,12 +13,12 @@ import (
 )
 
 type task struct {
-	ID          uint      `json:"id" gorm:"primary_key"`
-	Title       string    `json:"title"`
-	CreatedAt   time.Time `json:"createdat"`
-	UpdatedAt   time.Time `json:"updatedat"`
-	Completed   bool      `json:"completed"`
-	Description string    `json:"description"`
+	ID          uint      `form:"id" json:"id" gorm:"primary_key"`
+	Title       string    `form:"title" json:"title"`
+	CreatedAt   time.Time `form:"createdat" json:"createdat"`
+	UpdatedAt   time.Time `form:"updatedat" json:"updatedat"`
+	Completed   bool      `form:"completed" json:"completed"`
+	Description string    `form:"description" json:"description"`
 }
 
 type createtask struct {
@@ -37,7 +38,7 @@ type changetask struct {
 }
 
 const (
-	port = ":8080"
+	port = ":8081"
 )
 
 func initial(c *gin.Context) {
@@ -54,27 +55,28 @@ func invalid(c *gin.Context) {
 	return
 }
 func addtasks(c *gin.Context) {
-	var input createtask
+	//var input createtask
 	title := c.PostForm("title")
-	completed := c.PostForm("completed")
+	completed, _ := strconv.Atoi(c.PostForm("completed"))
+	//completed := c.GetBool("completed")
 	description := c.PostForm("description")
-
+	var finished bool
 	c.HTML(http.StatusOK, "add.html", gin.H{
-		"title": "Main website",
+		"title": "Add task",
 	})
-
-	if err := c.ShouldBindJSON(&input); err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-		return
+	if completed == 1 {
+		finished = true
+	} else {
+		finished = false
 	}
+
+	// if err := c.ShouldBind(&input); err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+	// 	return
+	// }
 	request := &task{
-		// Title: input.Title,
-		// CreatedAt:   input.CreatedAt,
-		// UpdatedAt:   input.UpdatedAt,
-		// Completed:   input.Completed,
-		// Description: input.Description,
 		Title:       title,
-		Completed:   completed,
+		Completed:   finished,
 		Description: description,
 	}
 
@@ -82,6 +84,30 @@ func addtasks(c *gin.Context) {
 
 	c.JSON(http.StatusOK, gin.H{"data": request})
 
+}
+
+func deletetask(c *gin.Context) {
+	// Get model if exist
+	title := c.PostForm("title")
+	//id, _ := strconv.Atoi(c.PostForm("id"))
+	//key := c.PostForm("id")
+	// if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
+	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+	// 	return
+	// }
+	c.HTML(http.StatusOK, "delete.html", gin.H{
+		"title": "Delete task",
+	})
+
+	//value, _ := strconv.ParseUint(key, 8, 0)
+	request := &task{
+		//ID:    value,
+		Title: title,
+	}
+
+	db.Where("title = ?", title).Delete(&task{})
+
+	c.JSON(http.StatusOK, gin.H{"data": request})
 }
 
 func findtask(c *gin.Context) {
@@ -121,26 +147,14 @@ func updatetask(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": task})
 }
 
-func deletetask(c *gin.Context) {
-	// Get model if exist
-	var task task
-	if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
-		c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-		return
-	}
-
-	db.Delete(&task)
-
-	c.JSON(http.StatusOK, gin.H{"data": true})
-}
-
 func routing(router *gin.Engine) {
 	router.GET("/home", initial)
 	router.GET("/tasks", findtasks)
 	router.POST("/addtask", addtasks)
 	router.GET("/tasks/:id", findtask)
 	router.PATCH("/tasks/:id", updatetask)
-	router.DELETE("/deletetask", deletetask)
+	//router.DELETE("/deletetask", deletetask)
+	router.POST("/deletetask", deletetask)
 	router.GET("/addtask", func(c *gin.Context) {
 		c.HTML(200, "add.html", gin.H{
 			"title": "Add task",
@@ -151,7 +165,11 @@ func routing(router *gin.Engine) {
 			"title": "Delete task",
 		})
 	})
-
+	router.GET("/updatetask", func(c *gin.Context) {
+		c.HTML(200, "update.html", gin.H{
+			"title": "Update task",
+		})
+	})
 	router.NoRoute(invalid)
 }
 
@@ -178,7 +196,7 @@ func main() {
 	router.LoadHTMLGlob("templates/*")
 	routing(router)
 	// s := &http.Server{
-	// 	Addr:           ":8080",
+	// 	Addr:           ":8081",
 	// 	Handler:        router,
 	// 	ReadTimeout:    10 * time.Second,
 	// 	WriteTimeout:   10 * time.Second,
