@@ -6,8 +6,12 @@
 </head>
 <body>
     <h1>Update task</h1>
-     <form action="/addtask" method="post" > 
-        Title: <input type="text" name="title"><br>
+
+    <form action="/updatetask" method="post" > 
+    <h2> Enter title of task you want to update </h2>
+        Previous Title: <input type="text" name="name"><br> 
+    <h2> Enter new values </h2>
+        New Title: <input type="text" name="title"><br>
         Completed: <br>
         <input type="radio" id="true_form" name="completed" value="1">
         <label for="completed">True</label><br>
