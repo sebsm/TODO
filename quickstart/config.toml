@@ -1,0 +1,14 @@
+baseURL = "http://example.org/"
+languageCode = "en-us"
+title = "TODO web application"
+theme = "hugo-PaperMod"
+ShowToc = true
+TocOpen = true
+[params]
+    tag = "tags"
+    category = "categories"
+    defaultTheme = "light"
+    [homeInfoParams]
+        Title = "Hi there wave"
+        Content = "Can be Info, links, about..."
+    
