@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Update task</title>
-</head>
+
+{{ template "header" }}
+
 <body>
+{{ template "navbar"}}
+    <div class="menu">
     <h1>Update task</h1>
 
     <form action="/updatetask" method="post" > 
@@ -23,4 +24,7 @@
         <input type="reset">
     </form>
 <p>[<a href="/home">Back</a>]</p>
+</div>
+{{ template "footer" }}
 </body>
+

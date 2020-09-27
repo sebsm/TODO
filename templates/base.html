@@ -1,0 +1,28 @@
+{{ template "header" }}
+
+{{ define "navbar" }}<nav class="navbar navbar-fixed-top navbar-inverse">
+      <div class="container">
+        <div class="navbar-header">
+          <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
+            <span class="sr-only">Toggle navigation</span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+            <span class="icon-bar"></span>
+          </button>
+          <a class="navbar-brand" href="/home">TODO Web application</a>
+        </div>
+        
+        <div id="navbar" class="collapse navbar-collapse">
+          <ul class="nav navbar-nav">
+            <li><a href="/findtask">Find task</a></li>
+            <li><a href="/tasks">Show all</a></li>
+            <li><a href="/addtask">Add task</a></li>
+            <li><a href="/deletetask">Delete task</a></li>
+            <li><a href="/updatetask">Update task</a></li>
+            <li><a href="https://github.com/gin-gonic/gin">Gin Framework</a></li>
+          </ul>
+        </div><!-- /.nav-collapse -->
+      </div><!-- /.container -->
+    </nav><!-- /.navbar --> {{ end }}
+
+{{ template "footer" }}

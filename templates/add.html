@@ -1,22 +1,26 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Adding task</title>
-</head>
+    
+{{ template "header" }}
+
 <body>
+{{ template "navbar"}}
+    <div class="menu"> 
     <h1>Add task</h1>
-     <form action="/addtask" method="post" > 
+    <form action="/addtask" method="post" > 
         Title: <input type="text" name="title"><br>
         Completed: <br>
         <input type="radio" id="true_form" name="completed" value="1">
         <label for="completed">True</label><br>
         <input type="radio" id="false_form" name="completed" value="0">
         <label for="completed">False</label><br>
-        
+    
         Description: <input type="text" name="description"><br><br>
         <input type="submit" value="Submit">
         <input type="reset">
     </form>
 <p>[<a href="/home">Back</a>]</p>
+</div> 
+
+{{ template "footer" }}
 </body>

@@ -22,23 +22,19 @@ type task struct {
 }
 
 type createtask struct {
-	Title string `form:"title" binding:"required"`
-	// CreatedAt   time.Time `json:"createdat" binding:"createdat"`
-	// UpdatedAt   time.Time `json:"updatedat" binding:"updatedat"`
+	Title       string `form:"title" binding:"required"`
 	Completed   bool   `form:"completed" binding:"required"`
 	Description string `form:"description" binding:"required"`
 }
 
 type changetask struct {
-	Title string `json:"title" `
-	// CreatedAt   time.Time `json:"createdat"`
-	// UpdatedAt   time.Time `json:"updatedat"`
+	Title       string `json:"title" `
 	Completed   bool   `json:"completed"`
 	Description string `json:"description"`
 }
 
 const (
-	port = ":8081"
+	port = ":8080"
 )
 
 func initial(c *gin.Context) {

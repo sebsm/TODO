@@ -1,12 +1,25 @@
-<h1>Home page</h1>
+<!doctype html>
+<html lang="en">
 
-<h2> TODO Application </h2>
+    {{ template "header" }}
+
+    <body>
+    {{ template "navbar"}}
+        <div class="menu">  
+        <h1>Home page</h1>
+
+        <h2> TODO Application </h2>
 
 
 
-<div>Choose an option </div>
-<p>[<a href="/addtask">Add task</a>]</p>
-<p>[<a href="/deletetask">Delete task</a>]</p>
-<p>[<a href="/updatetask">Update task</a>]</p>
-<p>[<a href="/tasks">Show all tasks</a>]</p>
-<p>[<a href="/findtask">Find task</a>]</p>
+        <div>Choose an option </div>
+        <p>[<a href="/addtask">Add task</a>]</p>
+        <p>[<a href="/deletetask">Delete task</a>]</p>
+        <p>[<a href="/updatetask">Update task</a>]</p>
+        <p>[<a href="/tasks">Show all tasks</a>]</p>
+        <p>[<a href="/findtask">Find task</a>]</p>
+
+        {{ template "footer" }}
+        </div>
+    </body>
+</html>

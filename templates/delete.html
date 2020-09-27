@@ -1,10 +1,11 @@
 <!doctype html>
 <html lang="en">
-<head>
-    <meta charset="utf-8">
-    <title>Deleting task</title>
-</head>
+    
+{{ template "header" }}
+    
 <body>
+{{ template "navbar"}}
+    <div class="menu">
     <h1>Delete task</h1>
     <form action="/deletetask" method="post">
         Title: <input type="text" name="title"><br>
@@ -12,4 +13,6 @@
         <input type="reset">
     </form>
 <p>[<a href="/home">Back</a>]</p>
+</div>
+{{ template "footer" }}
 </body>
