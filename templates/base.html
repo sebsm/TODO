@@ -1,6 +1,7 @@
 {{ template "header" }}
 
-{{ define "navbar" }}<nav class="navbar navbar-fixed-top navbar-inverse">
+{{ define "navbar" }}
+<nav class="navbar navbar-inherit-top navbar-inverse">
       <div class="container">
         <div class="navbar-header">
           <button type="button" class="navbar-toggle collapsed" data-toggle="collapse" data-target="#navbar" aria-expanded="false" aria-controls="navbar">
@@ -21,6 +22,14 @@
             <li><a href="/updatetask">Update task</a></li>
             <li><a href="https://github.com/gin-gonic/gin">Gin Framework</a></li>
           </ul>
+          <form class="form-inline">
+            <label class="sr-only" for="inlineFormInputName2">Name</label>
+            <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Search task">
+
+            <button type="submit" class="btn btn-primary mb-2" style="
+            margin-left: 5px;
+            ">Submit</button>
+          </form>
         </div><!-- /.nav-collapse -->
       </div><!-- /.container -->
     </nav><!-- /.navbar --> {{ end }}
