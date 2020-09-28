@@ -1,3 +1,3 @@
 # TODO
 
-Simple TODO app using Postgres + GORM + Gin framework
+# Simple TODO app using Postgres + GORM + Gin framework
