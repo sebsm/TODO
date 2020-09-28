@@ -160,9 +160,9 @@ func findtask(c *gin.Context) {
 	c.HTML(200, "find.html", gin.H{
 		"title": "Find task",
 	})
-	request := &task{
-		Title: title,
-	}
+	// request := &task{
+	// 	Title: title,
+	// }
 
 	// if err := db.Where("title = ?", title).First(&task).Error; err != nil {
 	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
@@ -171,7 +171,7 @@ func findtask(c *gin.Context) {
 
 	s := "%" + title + "%"
 	db.Where("title LIKE ?", s).Find(&tasks)
-	c.JSON(http.StatusOK, gin.H{"data": request})
+	c.JSON(http.StatusOK, gin.H{"data": tasks})
 
 }
 
