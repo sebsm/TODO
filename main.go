@@ -155,6 +155,7 @@ func updatetask(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": request})
 }
 func findtask(c *gin.Context) {
+	var tasks []task
 	title := c.PostForm("title")
 	c.HTML(200, "find.html", gin.H{
 		"title": "Find task",
@@ -162,11 +163,14 @@ func findtask(c *gin.Context) {
 	request := &task{
 		Title: title,
 	}
+
 	// if err := db.Where("title = ?", title).First(&task).Error; err != nil {
 	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 	// 	return
 	// }\
-	db.Where("title = ?", title).First(&request)
+
+	s := "%" + title + "%"
+	db.Where("title LIKE ?", s).Find(&tasks)
 	c.JSON(http.StatusOK, gin.H{"data": request})
 
 }
@@ -233,6 +237,7 @@ func main() {
 	//db.Create(&task{Description: "Wash the dishes", Completed: true})
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*")
+	router.Static("/assets", "./assets")
 	routing(router)
 	// s := &http.Server{
 	// 	Addr:           ":8081",

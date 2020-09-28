@@ -7,46 +7,37 @@
     {{ template "navbar"}}
         <div class="menu">  
         <h1>Home page</h1>
-
-        <h1> TODO Application </h1>
         <div>Choose an option </div>
-        <div></div>
-        <p>[<a href="/addtask">Add task</a>]</p>
-        <p>[<a href="/deletetask">Delete task</a>]</p>
-        <p>[<a href="/updatetask">Update task</a>]</p>
-        <p>[<a href="/tasks">Show all tasks</a>]</p>
-        <p>[<a href="/findtask">Find task</a>]</p>
-
         <div class="row">
             <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                <img src="/assets/add.png" alt="add" width="200" height="200">
                 <h2>Add task</h2>
                 <p>Add new task to your list.</p>
-                <p><a class="btn btn-secondary" href="#" role="button">Add &raquo;</a></p>
+                <p><a class="btn btn-secondary" href="addtask" role="button">Add &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                <img src="/assets/delete.png" alt="deletetask" width="200" height="200">
                 <h2>Delete task</h2>
                 <p>Delete task from your list.</p>
                 <p><a class="btn btn-secondary" href="#" role="button">Delete &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                <img src="/assets/update.png" alt="update" width="200" height="200">
                 <h2>Update task</h2>
                 <p>Update task from your list.</p>
-                <p><a class="btn btn-secondary" href="#" role="button">Update &raquo;</a></p>
+                <p><a class="btn btn-secondary" href="updatetask" role="button">Update &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                <img src="/assets/find.png" alt="find" width="200" height="200">
                 <h2>Find task</h2>
                 <p>Find task on your list..</p>
-                <p><a class="btn btn-secondary" href="#" role="button">Find &raquo;</a></p>
+                <p><a class="btn btn-secondary" href="findtask" role="button">Find &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
             <div class="col-lg-4">
-                <svg class="bd-placeholder-img rounded-circle" width="140" height="140" xmlns="http://www.w3.org/2000/svg" preserveAspectRatio="xMidYMid slice" focusable="false" role="img" aria-label="Placeholder: 140x140"><title>Placeholder</title><rect width="100%" height="100%" fill="#777"/><text x="50%" y="50%" fill="#777" dy=".3em">140x140</text></svg>
+                <img src="/assets/all.png" alt="all" width="200" height="200">
                 <h2>Show tasks</h2>
                 <p>Show all tasks present on your list.</p>
-                <p><a class="btn btn-secondary" href="#" role="button">Show &raquo;</a></p>
+                <p><a class="btn btn-secondary" href="tasks" role="button">Show &raquo;</a></p>
             </div><!-- /.col-lg-4 -->
         </div><!-- /.row -->
         {{ template "footer" }}
