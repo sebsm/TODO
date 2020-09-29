@@ -1,6 +1,7 @@
 package main
 
 import (
+	"fmt"
 	"log"
 	"net/http"
 	"strconv"
@@ -19,18 +20,6 @@ type task struct {
 	UpdatedAt   time.Time `form:"updatedat" json:"updatedat"`
 	Completed   bool      `form:"completed" json:"completed"`
 	Description string    `form:"description" json:"description"`
-}
-
-type createtask struct {
-	Title       string `form:"title" binding:"required"`
-	Completed   bool   `form:"completed" binding:"required"`
-	Description string `form:"description" binding:"required"`
-}
-
-type changetask struct {
-	Title       string `json:"title" `
-	Completed   bool   `json:"completed"`
-	Description string `json:"description"`
 }
 
 const (
@@ -163,7 +152,6 @@ func findtask(c *gin.Context) {
 	// request := &task{
 	// 	Title: title,
 	// }
-
 	// if err := db.Where("title = ?", title).First(&task).Error; err != nil {
 	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
 	// 	return
@@ -171,8 +159,20 @@ func findtask(c *gin.Context) {
 
 	s := "%" + title + "%"
 	db.Where("title LIKE ?", s).Find(&tasks)
-	c.JSON(http.StatusOK, gin.H{"data": tasks})
+	for i := 0; i < len(tasks); i++ {
+		c.JSON(http.StatusOK, gin.H{"data": tasks[i]})
+	}
 
+	// c.JSON(http.StatusOK, gin.H{
+	// 	"id":          db.Select("id").Where("title LIKE ?", s).Find(&tasks),
+	// 	"title":       db.Select("title").Where("title LIKE ?", s).Find(&tasks),
+	// 	"completed":   db.Select("completed").Where("title LIKE ?", s).Find(&tasks),
+	// 	"description": db.Select("description").Where("title LIKE ?", s).Find(&tasks),
+	// })
+
+	//fmt.Printf("ID: %v, Title: %v, CreatedAt: %v, Completed: %v, Description: %v \n", &tasks.ID, &tasks.Title, tasks.CreatedAt, tasks.Completed, tasks.Description)
+	print := fmt.Sprintf("%+v\n", tasks)
+	_ = print
 }
 
 func findtasks(c *gin.Context) {
