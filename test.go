@@ -77,3 +77,53 @@
 //     content: counter(rowNumber) ".";
 // }
 
+//var input createtask
+//completed := c.GetBool("completed")
+
+//id, _ := strconv.Atoi(c.PostForm("id"))
+//key := c.PostForm("id")
+// if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
+// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+// 	return
+// }
+// request := &task{
+// 	Title: title,
+// }
+// if err := db.Where("title = ?", title).First(&task).Error; err != nil {
+// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+// 	return
+// }\
+
+// for i := 0; i < len(tasks); i++ {
+// 	c.JSON(http.StatusOK, gin.H{
+// 		"data": fmt.Sprintf("%+v\n", tasks[i]),
+// 	})
+// }
+
+// c.JSON(http.StatusOK, gin.H{
+// 	"id":          db.Select("id").Where("title LIKE ?", s).Find(&tasks),
+// 	"title":       db.Select("title").Where("title LIKE ?", s).Find(&tasks),
+// 	"completed":   db.Select("completed").Where("title LIKE ?", s).Find(&tasks),
+// 	"description": db.Select("description").Where("title LIKE ?", s).Find(&tasks),
+// })
+
+//fmt.Printf("ID: %v, Title: %v, CreatedAt: %v, Completed: %v, Description: %v \n", &tasks.ID, &tasks.Title, tasks.CreatedAt, tasks.Completed, tasks.Description)
+
+// var name []string
+// for i := 0; i < len(tasks); i++ {
+// 	name[i] = fmt.Sprintf("%+v \n", tasks[i])
+// }
+
+//name := fmt.Sprintf("%+v \n", tasks)
+//var task task
+// Validate input
+//var input changetask
+// if err := c.ShouldBindJSON(&input); err != nil {
+// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
+// 	return
+// }
+// if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
+// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
+// 	return
+// }
+//var request task

@@ -2,8 +2,10 @@ package main
 
 import (
 	"fmt"
+	"io"
 	"log"
 	"net/http"
+	"os"
 	"strconv"
 	"time"
 
@@ -20,6 +22,11 @@ type task struct {
 	UpdatedAt   time.Time `form:"updatedat" json:"updatedat"`
 	Completed   bool      `form:"completed" json:"completed"`
 	Description string    `form:"description" json:"description"`
+}
+
+type login struct {
+	User     string `form:"user" json:"user" xml:"user"  binding:"required"`
+	Password string `form:"password" json:"password" xml:"password" binding:"required"`
 }
 
 const (
@@ -40,10 +47,10 @@ func invalid(c *gin.Context) {
 	return
 }
 func addtasks(c *gin.Context) {
-	//var input createtask
+
 	title := c.PostForm("title")
 	completed, _ := strconv.Atoi(c.PostForm("completed"))
-	//completed := c.GetBool("completed")
+
 	description := c.PostForm("description")
 	var finished bool
 	c.HTML(http.StatusOK, "add.html", gin.H{
@@ -54,11 +61,6 @@ func addtasks(c *gin.Context) {
 	} else {
 		finished = false
 	}
-
-	// if err := c.ShouldBind(&input); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
 	request := &task{
 		Title:       title,
 		Completed:   finished,
@@ -72,21 +74,13 @@ func addtasks(c *gin.Context) {
 }
 
 func deletetask(c *gin.Context) {
-	// Get model if exist
 	title := c.PostForm("title")
-	//id, _ := strconv.Atoi(c.PostForm("id"))
-	//key := c.PostForm("id")
-	// if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-	// 	return
-	// }
+
 	c.HTML(http.StatusOK, "delete.html", gin.H{
 		"title": "Delete task",
 	})
 
-	//value, _ := strconv.ParseUint(key, 8, 0)
 	request := &task{
-		//ID:    value,
 		Title: title,
 	}
 
@@ -96,18 +90,6 @@ func deletetask(c *gin.Context) {
 }
 
 func updatetask(c *gin.Context) {
-	//var task task
-	// Validate input
-	//var input changetask
-	// if err := c.ShouldBindJSON(&input); err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": err.Error()})
-	// 	return
-	// }
-	// if err := db.Where("id = ?", c.Param("id")).First(&task).Error; err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-	// 	return
-	// }
-	//var request task
 	title := c.PostForm("title")
 	description := c.PostForm("description")
 	completed, _ := strconv.Atoi(c.PostForm("completed"))
@@ -124,64 +106,27 @@ func updatetask(c *gin.Context) {
 	case 1:
 		finished = true
 	}
-
-	// if completed == 1 {
-	// 	finished = true
-	// } else if completed == 0 {
-	// 	finished = false
-	// } else {
-	// 	finished = false
-	// }
-
 	request := &task{
 		Title:       title,
 		Completed:   finished,
 		Description: description,
 	}
-
-	//db.Model(&task{}).Where("title = ?", name).Updates(task{Title: request.Title, Completed: request.Completed, Description: request.Description})
 	db.Model(&task{}).Where("title = ?", name).Updates(map[string]interface{}{"Title": request.Title, "Completed": request.Completed, "Description": request.Description})
 	c.JSON(http.StatusOK, gin.H{"data": request})
 }
 func findtask(c *gin.Context) {
 	var tasks []task
 	title := c.PostForm("title")
-	s := "%" + title + "%"
-	db.Where("title LIKE ?", s).Find(&tasks)
-	// var name []string
-	// for i := 0; i < len(tasks); i++ {
-	// 	name[i] = fmt.Sprintf("%+v \n", tasks[i])
-	// }
-
-	//name := fmt.Sprintf("%+v \n", tasks)
+	merged := "%" + title + "%"
+	db.Where("title LIKE ?", merged).Find(&tasks)
 
 	c.HTML(200, "find.html", gin.H{
 		"title": "Find task",
 		"name":  fmt.Sprintf("%+v\n", tasks),
 		"tasks": tasks,
 	})
-	// request := &task{
-	// 	Title: title,
-	// }
-	// if err := db.Where("title = ?", title).First(&task).Error; err != nil {
-	// 	c.JSON(http.StatusBadRequest, gin.H{"error": "Record not found!"})
-	// 	return
-	// }\
-
-	// for i := 0; i < len(tasks); i++ {
-	// 	c.JSON(http.StatusOK, gin.H{
-	// 		"data": fmt.Sprintf("%+v\n", tasks[i]),
-	// 	})
-	// }
-
-	// c.JSON(http.StatusOK, gin.H{
-	// 	"id":          db.Select("id").Where("title LIKE ?", s).Find(&tasks),
-	// 	"title":       db.Select("title").Where("title LIKE ?", s).Find(&tasks),
-	// 	"completed":   db.Select("completed").Where("title LIKE ?", s).Find(&tasks),
-	// 	"description": db.Select("description").Where("title LIKE ?", s).Find(&tasks),
-	// })
-
-	//fmt.Printf("ID: %v, Title: %v, CreatedAt: %v, Completed: %v, Description: %v \n", &tasks.ID, &tasks.Title, tasks.CreatedAt, tasks.Completed, tasks.Description)
+	text := fmt.Sprintln(merged)
+	io.WriteString(os.Stdout, text)
 
 }
 
@@ -192,7 +137,9 @@ func findtasks(c *gin.Context) {
 		"title": "All tasks",
 		"tasks": tasks,
 	})
-	//c.JSON(http.StatusOK, gin.H{"data": tasks})
+
+	s := fmt.Sprintln(tasks)
+	io.WriteString(os.Stdout, s)
 }
 
 func routing(router *gin.Engine) {
@@ -245,22 +192,13 @@ func connect() {
 func main() {
 
 	connect()
-	//db.Create(&task{Description: "Wash the dishes", Completed: true})
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/assets", "./assets")
 	router.Static("/css", "../assets/css")
+	router.Use(gin.Logger())
+	router.Use(gin.Recovery())
 	routing(router)
-	// s := &http.Server{
-	// 	Addr:           ":8081",
-	// 	Handler:        router,
-	// 	ReadTimeout:    10 * time.Second,
-	// 	WriteTimeout:   10 * time.Second,
-	// 	MaxHeaderBytes: 1 << 20,
-	// }
-	// s.ListenAndServe()
-
-	//router.Run(port)
 	http.ListenAndServe(port, router)
 	log.Fatal(autotls.Run(router))
 
