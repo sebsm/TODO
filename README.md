@@ -14,7 +14,7 @@ database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 3. Connect to your database and test.
 
 
-#Important links
+# Important links
 
 1. [Gin framework](https://github.com/gin-gonic/gin)
 2. [GORM ORM](https://github.com/go-gorm/gorm)
