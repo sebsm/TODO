@@ -28,4 +28,14 @@ database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 # Images
 
-[Main page](../images/Main.png?raw=true)
+![Main page](https://raw.githubusercontent.com/selvert/TODO/master/images/Main.PNG)
+
+![Add page](https://raw.githubusercontent.com/selvert/TODO/master/images/Add.PNG)
+
+![Delete page](https://raw.githubusercontent.com/selvert/TODO/master/images/Delete.PNG)
+
+![Find page](https://raw.githubusercontent.com/selvert/TODO/master/images/Find.PNG)
+
+![Update page](https://raw.githubusercontent.com/selvert/TODO/master/images/Update.PNG)
+
+![All page](https://raw.githubusercontent.com/selvert/TODO/master/images/All.PNG)
