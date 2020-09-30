@@ -5,6 +5,30 @@
    
 {{ template "navbar"}}
 <div class="menu">
+
+<h1> All tasks present in the database </h1>
+<table class="table table-striped">
+        <thead>
+            <th scope="col">#</th>
+            <th scope="col">ID</th>
+            <th scope="col">Title</th>
+            <th scope="col">Created</th>
+            <th scope="col">Completed</th>
+            <th scope="col">Description</th>
+        </thead>
+        {{ range .tasks}}
+        <tbody>
+            <tr>
+                <td></td>
+                <td>{{ .ID }}</td>
+                <td>{{ .Title }}</td>
+                <td>{{ .CreatedAt }}</td>
+                <td>{{ .Completed }}</td>
+                <td>{{ .Description }}</td>
+            </tr>
+        </tbody>
+        {{ end }}
+    </table>
 <p>[<a href="/home">Back</a>]</p>
 </div>
 

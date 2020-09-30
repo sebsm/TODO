@@ -146,8 +146,19 @@ func updatetask(c *gin.Context) {
 func findtask(c *gin.Context) {
 	var tasks []task
 	title := c.PostForm("title")
+	s := "%" + title + "%"
+	db.Where("title LIKE ?", s).Find(&tasks)
+	// var name []string
+	// for i := 0; i < len(tasks); i++ {
+	// 	name[i] = fmt.Sprintf("%+v \n", tasks[i])
+	// }
+
+	//name := fmt.Sprintf("%+v \n", tasks)
+
 	c.HTML(200, "find.html", gin.H{
 		"title": "Find task",
+		"name":  fmt.Sprintf("%+v\n", tasks),
+		"tasks": tasks,
 	})
 	// request := &task{
 	// 	Title: title,
@@ -157,11 +168,11 @@ func findtask(c *gin.Context) {
 	// 	return
 	// }\
 
-	s := "%" + title + "%"
-	db.Where("title LIKE ?", s).Find(&tasks)
-	for i := 0; i < len(tasks); i++ {
-		c.JSON(http.StatusOK, gin.H{"data": tasks[i]})
-	}
+	// for i := 0; i < len(tasks); i++ {
+	// 	c.JSON(http.StatusOK, gin.H{
+	// 		"data": fmt.Sprintf("%+v\n", tasks[i]),
+	// 	})
+	// }
 
 	// c.JSON(http.StatusOK, gin.H{
 	// 	"id":          db.Select("id").Where("title LIKE ?", s).Find(&tasks),
@@ -171,8 +182,7 @@ func findtask(c *gin.Context) {
 	// })
 
 	//fmt.Printf("ID: %v, Title: %v, CreatedAt: %v, Completed: %v, Description: %v \n", &tasks.ID, &tasks.Title, tasks.CreatedAt, tasks.Completed, tasks.Description)
-	print := fmt.Sprintf("%+v\n", tasks)
-	_ = print
+
 }
 
 func findtasks(c *gin.Context) {
@@ -180,8 +190,9 @@ func findtasks(c *gin.Context) {
 	db.Find(&tasks)
 	c.HTML(200, "tasks.html", gin.H{
 		"title": "All tasks",
+		"tasks": tasks,
 	})
-	c.JSON(http.StatusOK, gin.H{"data": tasks})
+	//c.JSON(http.StatusOK, gin.H{"data": tasks})
 }
 
 func routing(router *gin.Engine) {
@@ -238,6 +249,7 @@ func main() {
 	router := gin.Default()
 	router.LoadHTMLGlob("templates/*")
 	router.Static("/assets", "./assets")
+	router.Static("/css", "../assets/css")
 	routing(router)
 	// s := &http.Server{
 	// 	Addr:           ":8081",

@@ -22,10 +22,9 @@
             <li><a href="/updatetask">Update task</a></li>
             <li><a href="https://github.com/gin-gonic/gin">Gin Framework</a></li>
           </ul>
-          <form class="form-inline">
+          <form action="/findtask" method="post" class="form-inline">
             <label class="sr-only" for="inlineFormInputName2">Name</label>
-            <input type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Search task">
-
+            <input href="findtask" type="text" class="form-control mb-2 mr-sm-2" id="inlineFormInputName2" placeholder="Search task" name="title">
             <button type="submit" class="btn btn-primary mb-2" style="
             margin-left: 5px;
             ">Submit</button>
