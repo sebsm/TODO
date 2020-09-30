@@ -19,9 +19,9 @@ database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 1. [Gin framework](https://github.com/gin-gonic/gin)
 2. [GORM ORM](https://github.com/go-gorm/gorm)
 3. Icons:
-  -Add https://thenounproject.com/term/add-task/945026/
-  -Delete https://thenounproject.com/search/?q=DELETE+TASK&i=525770
-  -Find https://thenounproject.com/search/?q=FIND+TASK&i=532103
-  -Update https://thenounproject.com/search/?q=UPDATE+TASK&i=2676042
-  -All https://thenounproject.com/term/task/3129877/
+  *-Add https://thenounproject.com/term/add-task/945026/
+  *-Delete https://thenounproject.com/search/?q=DELETE+TASK&i=525770
+  *-Find https://thenounproject.com/search/?q=FIND+TASK&i=532103
+  *-Update https://thenounproject.com/search/?q=UPDATE+TASK&i=2676042
+  *-All https://thenounproject.com/term/task/3129877/
 4. PostgreSQL https://www.postgresql.org/
