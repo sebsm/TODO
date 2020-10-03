@@ -7,7 +7,7 @@
 2. Configure PostgreSQL (or other DB, but you must then change database driver) and pass it to these lines.
 
 ```
-dsn := "user=postgres password=s197328645S! dbname=todo port=5432 sslmode=disable TimeZone=Europe/Warsaw"
+dsn := "user=your_user(example user:ard) password=your_pass(your password example password=1234) dbname=your_name (example dbname:abc) port=your_port (example: port=1234) sslmode=disable TimeZone=Europe/Warsaw"
 database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 ```
 
