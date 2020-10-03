@@ -177,7 +177,7 @@ func routing(router *gin.Engine) {
 var db *gorm.DB
 
 func connect() {
-	dsn := "user=postgres password=s197328645S! dbname=todo port=5432 sslmode=disable TimeZone=Europe/Warsaw"
+	dsn := "user= password= dbname= port= sslmode=disable TimeZone=Europe/Warsaw"
 	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 
 	if err != nil {
