@@ -186,6 +186,10 @@ func connect() {
 	//dsn := os.Getenv("DATABASE_URL")
 
 	sqlDB, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+
+	if err == nil {
+		fmt.Sprintln(err)
+	}
 	database, err := gorm.Open(postgres.New(postgres.Config{
 		Conn: sqlDB,
 	}), &gorm.Config{})
