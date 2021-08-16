@@ -1,6 +1,7 @@
 package main
 
 import (
+	"database/sql"
 	"fmt"
 	"io"
 	"log"
@@ -174,9 +175,20 @@ func routing(router *gin.Engine) {
 
 var db *gorm.DB
 
+type Serwer struct {
+	DB     *gorm.DB
+	Router *gin.Engine
+}
+
 func connect() {
 	// dsn := "user= password= dbname= port= sslmode= TimeZone=Europe/Warsaw"
-	database, err := gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
+	//database, err := gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
+	//dsn := os.Getenv("DATABASE_URL")
+
+	sqlDB, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	database, err := gorm.Open(postgres.New(postgres.Config{
+		Conn: sqlDB,
+	}), &gorm.Config{})
 
 	if err != nil {
 		panic("Failed to connect to database!")
