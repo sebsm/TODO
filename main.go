@@ -29,9 +29,9 @@ type task struct {
 // 	Password string `form:"password" json:"password" xml:"password" binding:"required"`
 // }
 
-const (
-	PORT = ":8080"
-)
+// const (
+// 	PORT = ":8080"
+// )
 
 func initial(c *gin.Context) {
 	c.HTML(200, "home.html", gin.H{
@@ -198,7 +198,7 @@ func main() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	routing(router)
-	http.ListenAndServe(PORT, router)
+	http.ListenAndServe("PORT", router)
 	log.Fatal(autotls.Run(router))
 
 }
