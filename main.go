@@ -24,27 +24,25 @@ type task struct {
 	Description string    `form:"description" json:"description"`
 }
 
-type login struct {
-	User     string `form:"user" json:"user" xml:"user"  binding:"required"`
-	Password string `form:"password" json:"password" xml:"password" binding:"required"`
-}
+// type login struct {
+// 	User     string `form:"user" json:"user" xml:"user"  binding:"required"`
+// 	Password string `form:"password" json:"password" xml:"password" binding:"required"`
+// }
 
 const (
-	port = ":8080"
+	PORT = ":8080"
 )
 
 func initial(c *gin.Context) {
 	c.HTML(200, "home.html", gin.H{
 		"title": "Home page",
 	})
-	return
 }
 
 func invalid(c *gin.Context) {
 	c.JSON(404, gin.H{
 		"message": "Unable to proceed",
 	})
-	return
 }
 func addtasks(c *gin.Context) {
 
@@ -199,7 +197,7 @@ func main() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	routing(router)
-	http.ListenAndServe(port, router)
+	http.ListenAndServe(PORT, router)
 	log.Fatal(autotls.Run(router))
 
 }
