@@ -175,8 +175,8 @@ func routing(router *gin.Engine) {
 var db *gorm.DB
 
 func connect() {
-	dsn := "user= password= dbname= port= sslmode= TimeZone=Europe/Warsaw"
-	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
+	// dsn := "user= password= dbname= port= sslmode= TimeZone=Europe/Warsaw"
+	database, err := gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
 
 	if err != nil {
 		panic("Failed to connect to database!")
@@ -185,6 +185,7 @@ func connect() {
 	database.AutoMigrate(&task{})
 
 	db = database
+
 }
 
 func main() {
