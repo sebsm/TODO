@@ -198,7 +198,7 @@ func main() {
 	router.Use(gin.Logger())
 	router.Use(gin.Recovery())
 	routing(router)
-	http.ListenAndServe("PORT", router)
+	http.ListenAndServe(":8080", router)
 	log.Fatal(autotls.Run(router))
 
 }
