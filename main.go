@@ -183,10 +183,10 @@ type Serwer struct {
 func connect() {
 
 	//dsn := "host=ec2-54-196-65-186.compute-1.amazonaws.com user=wmvufhsdqlrtkr password=6e0f3c5109cb6e4a42e02e6924d2e3ee0f7eb36774a379df9b0072871dfb91f2 dbname=d5pffg8tbeebjo port=5432 sslmode=disable"
-	dst := "postgres://wmvufhsdqlrtkr:6e0f3c5109cb6e4a42e02e6924d2e3ee0f7eb36774a379df9b0072871dfb91f2@ec2-54-196-65-186.compute-1.amazonaws.com:5432/d5pffg8tbeebjo"
+	//dst := "postgres://wmvufhsdqlrtkr:6e0f3c5109cb6e4a42e02e6924d2e3ee0f7eb36774a379df9b0072871dfb91f2@ec2-54-196-65-186.compute-1.amazonaws.com:5432/d5pffg8tbeebjo"
 	// dsn := "user= password= dbname= port= sslmode= TimeZone=Europe/Warsaw"
 	//database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
-	database, err := gorm.Open(postgres.Open(dst), &gorm.Config{})
+	database, err := gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
 	//dsn := os.Getenv("DATABASE_URL")
 
 	// sqlDB, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
