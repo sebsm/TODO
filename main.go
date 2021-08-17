@@ -12,7 +12,6 @@ import (
 
 	"github.com/gin-gonic/autotls"
 	"github.com/gin-gonic/gin"
-	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
 
@@ -180,28 +179,28 @@ type Serwer struct {
 	Router *gin.Engine
 }
 
-func connect() {
+func connect() (db *sql.DB) {
 	// dsn := "user= password= dbname= port= sslmode= TimeZone=Europe/Warsaw"
 	//database, err := gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
 	//dsn := os.Getenv("DATABASE_URL")
 
-	sqlDB, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	db, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 
 	if err == nil {
 		fmt.Sprintln(err)
 	}
-	database, err := gorm.Open(postgres.New(postgres.Config{
-		Conn: sqlDB,
-	}), &gorm.Config{})
+	// database, err := gorm.Open(postgres.New(postgres.Config{
+	// 	Conn: sqlDB,
+	// }), &gorm.Config{})
 
-	if err != nil {
-		panic("Failed to connect to database!")
-	}
+	// if err != nil {
+	// 	panic("Failed to connect to database!")
+	// }
 
-	database.AutoMigrate(&task{})
+	// database.AutoMigrate(&task{})
 
-	db = database
-
+	// db = database
+	return db
 }
 
 func main() {
