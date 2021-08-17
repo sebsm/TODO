@@ -1,7 +1,6 @@
 package main
 
 import (
-	"database/sql"
 	"fmt"
 	"io"
 	"log"
@@ -182,19 +181,19 @@ type Serwer struct {
 
 func connect() {
 
-	//dsn:= "user= password= dbname= port= sslmode= TimeZone=Europe/Warsaw"
+	dsn := "host=ec2-54-196-65-186.compute-1.amazonaws.com user=wmvufhsdqlrtkr password=6e0f3c5109cb6e4a42e02e6924d2e3ee0f7eb36774a379df9b0072871dfb91f2 dbname=d5pffg8tbeebjo port=5432"
 	// dsn := "user= password= dbname= port= sslmode= TimeZone=Europe/Warsaw"
-	//database, err := gorm.Open(postgres.Open(os.Getenv("DATABASE_URL")), &gorm.Config{})
+	database, err := gorm.Open(postgres.Open(dsn), &gorm.Config{})
 	//dsn := os.Getenv("DATABASE_URL")
 
-	sqlDB, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
+	// sqlDB, err := sql.Open("postgres", os.Getenv("DATABASE_URL"))
 
-	if err == nil {
-		fmt.Sprintln(err)
-	}
-	database, err := gorm.Open(postgres.New(postgres.Config{
-		Conn: sqlDB,
-	}), &gorm.Config{})
+	// if err == nil {
+	// 	fmt.Sprintln(err)
+	// }
+	// database, err := gorm.Open(postgres.New(postgres.Config{
+	// 	Conn: sqlDB,
+	// }), &gorm.Config{})
 
 	if err != nil {
 		panic("Failed to connect to database!")
