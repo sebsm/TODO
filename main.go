@@ -11,6 +11,7 @@ import (
 
 	"github.com/gin-gonic/autotls"
 	"github.com/gin-gonic/gin"
+	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
 	"gorm.io/gorm"
 )
@@ -206,6 +207,12 @@ func connect() {
 }
 
 func main() {
+
+	e := godotenv.Load()
+
+	if e != nil {
+		fmt.Print(e)
+	}
 	port := os.Getenv("PORT")
 	log.Print(port)
 	if port == "" {
