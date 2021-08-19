@@ -30,7 +30,7 @@ type task struct {
 // }
 
 const (
-	port = ":8080"
+	port = "8080"
 )
 
 func initial(c *gin.Context) {
@@ -231,6 +231,6 @@ func main() {
 	routing(router)
 	//http.ListenAndServe(port, router)
 	//log.Fatal(autotls.Run(router))
-	router.Run(port)
+	router.Run(":" + port)
 
 }
