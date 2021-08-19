@@ -229,9 +229,9 @@ func main() {
 	router.Use(gin.Logger())
 	//router.Use(gin.Recovery())
 	routing(router)
-	//http.ListenAndServe(port, router)
+	http.ListenAndServe(port, router)
 	//log.Fatal(autotls.Run(router))
 	//router.Run(":" + port)
-	router.Run(port)
+	//router.Run(port)
 
 }
