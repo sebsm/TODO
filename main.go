@@ -9,7 +9,6 @@ import (
 	"strconv"
 	"time"
 
-	"github.com/gin-gonic/autotls"
 	"github.com/gin-gonic/gin"
 	"github.com/joho/godotenv"
 	"gorm.io/driver/postgres"
@@ -35,16 +34,16 @@ type task struct {
 // )
 
 func initial(c *gin.Context) {
-	c.HTML(200, "home.html", gin.H{
+	c.HTML(http.StatusOK, "home.html", gin.H{
 		"title": "Home page",
 	})
 }
 
-func invalid(c *gin.Context) {
-	c.JSON(404, gin.H{
-		"message": "Unable to proceed",
-	})
-}
+// func invalid(c *gin.Context) {
+// 	c.JSON(404, gin.H{
+// 		"message": "Unable to proceed",
+// 	})
+// }
 func addtasks(c *gin.Context) {
 
 	title := c.PostForm("title")
@@ -114,21 +113,21 @@ func updatetask(c *gin.Context) {
 	c.JSON(http.StatusOK, gin.H{"data": request})
 }
 
-// func findtask(c *gin.Context) {
-// 	var tasks []task
-// 	title := c.PostForm("title")
-// 	merged := "%" + title + "%"
-// 	db.Where("title LIKE ?", merged).Find(&tasks)
+func findtask(c *gin.Context) {
+	var tasks []task
+	title := c.PostForm("title")
+	merged := "%" + title + "%"
+	db.Where("title LIKE ?", merged).Find(&tasks)
 
-// 	c.HTML(200, "find.html", gin.H{
-// 		"title": "Find task",
-// 		"name":  fmt.Sprintf("%+v\n", tasks),
-// 		"tasks": tasks,
-// 	})
-// 	text := fmt.Sprintln(merged)
-// 	io.WriteString(os.Stdout, text)
+	c.HTML(200, "find.html", gin.H{
+		"title": "Find task",
+		"name":  fmt.Sprintf("%+v\n", tasks),
+		"tasks": tasks,
+	})
+	text := fmt.Sprintln(merged)
+	io.WriteString(os.Stdout, text)
 
-// }
+}
 
 func findtasks(c *gin.Context) {
 	var tasks []task
@@ -143,9 +142,9 @@ func findtasks(c *gin.Context) {
 }
 
 func routing(router *gin.Engine) {
-	router.GET("/home", initial)
+	router.GET("/", initial)
 	router.GET("/tasks", findtasks)
-	//router.POST("/findtask", findtask)
+	router.POST("/findtask", findtask)
 	router.POST("/addtask", addtasks)
 	router.POST("/deletetask", deletetask)
 	router.POST("/updatetask", updatetask)
@@ -171,7 +170,7 @@ func routing(router *gin.Engine) {
 	// 	})
 	// })
 
-	router.NoRoute(invalid)
+	//router.NoRoute(invalid)
 }
 
 var db *gorm.DB
@@ -228,10 +227,10 @@ func main() {
 	router.Static("/assets", "./assets")
 	router.Static("/css", "../assets/css")
 	router.Use(gin.Logger())
-	router.Use(gin.Recovery())
+	//router.Use(gin.Recovery())
 	routing(router)
-	http.ListenAndServe(port, router)
-	log.Fatal(autotls.Run(router))
-	//router.Run(port)
+	//http.ListenAndServe(port, router)
+	//log.Fatal(autotls.Run(router))
+	router.Run(port)
 
 }
