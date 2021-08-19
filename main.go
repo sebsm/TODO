@@ -113,21 +113,22 @@ func updatetask(c *gin.Context) {
 	db.Model(&task{}).Where("title = ?", name).Updates(map[string]interface{}{"Title": request.Title, "Completed": request.Completed, "Description": request.Description})
 	c.JSON(http.StatusOK, gin.H{"data": request})
 }
-func findtask(c *gin.Context) {
-	var tasks []task
-	title := c.PostForm("title")
-	merged := "%" + title + "%"
-	db.Where("title LIKE ?", merged).Find(&tasks)
 
-	c.HTML(200, "find.html", gin.H{
-		"title": "Find task",
-		"name":  fmt.Sprintf("%+v\n", tasks),
-		"tasks": tasks,
-	})
-	text := fmt.Sprintln(merged)
-	io.WriteString(os.Stdout, text)
+// func findtask(c *gin.Context) {
+// 	var tasks []task
+// 	title := c.PostForm("title")
+// 	merged := "%" + title + "%"
+// 	db.Where("title LIKE ?", merged).Find(&tasks)
 
-}
+// 	c.HTML(200, "find.html", gin.H{
+// 		"title": "Find task",
+// 		"name":  fmt.Sprintf("%+v\n", tasks),
+// 		"tasks": tasks,
+// 	})
+// 	text := fmt.Sprintln(merged)
+// 	io.WriteString(os.Stdout, text)
+
+// }
 
 func findtasks(c *gin.Context) {
 	var tasks []task
@@ -144,7 +145,7 @@ func findtasks(c *gin.Context) {
 func routing(router *gin.Engine) {
 	router.GET("/home", initial)
 	router.GET("/tasks", findtasks)
-	router.POST("/findtask", findtask)
+	//router.POST("/findtask", findtask)
 	router.POST("/addtask", addtasks)
 	router.POST("/deletetask", deletetask)
 	router.POST("/updatetask", updatetask)
