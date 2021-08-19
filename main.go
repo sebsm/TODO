@@ -29,9 +29,9 @@ type task struct {
 // 	Password string `form:"password" json:"password" xml:"password" binding:"required"`
 // }
 
-// const (
-// 	PORT = ":8080"
-// )
+const (
+	port = ":8080"
+)
 
 func initial(c *gin.Context) {
 	c.HTML(http.StatusOK, "home.html", gin.H{
@@ -215,7 +215,7 @@ func main() {
 	if e != nil {
 		fmt.Print(e)
 	}
-	port := os.Getenv("PORT")
+	//port := os.Getenv("PORT")
 	log.Print(port)
 	if port == "" {
 		log.Fatal("$PORT must be set")
