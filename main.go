@@ -165,11 +165,11 @@ func routing(router *gin.Engine) {
 			"title": "Update task",
 		})
 	})
-	router.GET("/findtask", func(c *gin.Context) {
-		c.HTML(200, "find.html", gin.H{
-			"title": "Find task",
-		})
-	})
+	// router.GET("/findtask", func(c *gin.Context) {
+	// 	c.HTML(200, "find.html", gin.H{
+	// 		"title": "Find task",
+	// 	})
+	// })
 
 	router.NoRoute(invalid)
 }
