@@ -36,14 +36,14 @@ go run main.go
 
 # Images
 
-![Main page](https://raw.githubusercontent.com/sebsm/TODO/master/images/Main.PNG)
+![Main page](https://raw.githubusercontent.com/sebsm/TODO/dev/images/Main.PNG)
 
-![Add page](https://raw.githubusercontent.com/sebsm/TODO/master/images/Add.PNG)
+![Add page](https://raw.githubusercontent.com/sebsm/TODO/dev/images/Add.PNG)
 
-![Delete page](https://raw.githubusercontent.com/sebsm/TODO/master/images/Delete.PNG)
+![Delete page](https://raw.githubusercontent.com/sebsm/TODO/dev/images/Delete.PNG)
 
-![Find page](https://raw.githubusercontent.com/sebsm/TODO/master/images/Find.PNG)
+![Find page](https://raw.githubusercontent.com/sebsm/TODO/dev/images/Find.PNG)
 
-![Update page](https://raw.githubusercontent.com/sebsm/TODO/master/images/Update.PNG)
+![Update page](https://raw.githubusercontent.com/sebsm/TODO/dev/images/Update.PNG)
 
-![All page](https://raw.githubusercontent.com/sebsm/TODO/master/images/All.PNG)
+![All page](https://raw.githubusercontent.com/sebsm/TODO/dev/images/All.PNG)
